@@ -22,8 +22,7 @@ const UserContext = createContext(null);
 /* =========================================================
    FIRST ACCESSIBLE ROUTES
    ---------------------------------------------------------
-   Disesuaikan dengan access key yang saat ini
-   dikembalikan oleh backend getUserAccess_():
+   Access key yang dikembalikan backend getUserAccess_():
 
    - dashboard
    - pengaturan
@@ -60,6 +59,16 @@ export function getFirstAccessibleRoute(access = {}) {
 ========================================================= */
 
 export function UserProvider({ children }) {
+  /* =======================================================
+     AUTH STATE
+     -------------------------------------------------------
+     credentials menjadi sumber data autentikasi selama
+     aplikasi berjalan.
+
+     Perpindahan route tidak menghapus state ini karena
+     UserProvider berada di RootLayout.
+  ======================================================= */
+
   const [credentials, setCredentials] = useState(null);
 
   const [authStatus, setAuthStatus] =
@@ -68,8 +77,15 @@ export function UserProvider({ children }) {
   /* =======================================================
      RESTORE SESSION
      -------------------------------------------------------
-     Dipanggil ketika aplikasi pertama kali dijalankan
-     atau browser melakukan refresh.
+     Hanya dijalankan ketika UserProvider pertama kali
+     dibuat.
+
+     Kondisi ini terjadi ketika:
+     - Aplikasi pertama kali dibuka
+     - Browser di-refresh
+     - Browser ditutup lalu dibuka kembali
+
+     Tidak dijalankan setiap perpindahan route.
   ======================================================= */
 
   useEffect(() => {
@@ -103,10 +119,14 @@ export function UserProvider({ children }) {
   /* =======================================================
      LOGIN
      -------------------------------------------------------
-     UserContext:
-     - Memanggil Auth.login()
-     - Mengisi React state
-     - Tidak menyimpan session sendiri
+     Alur:
+     1. Auth.login() mengirim username dan password
+     2. Backend mengembalikan credentials
+     3. Auth.js menyimpan session ke localStorage
+     4. UserContext langsung menyimpan credentials ke state
+     5. RouteGuard dapat langsung melanjutkan navigasi
+
+     TIDAK memanggil authRefresh() setelah login berhasil.
   ======================================================= */
 
   async function login(username, password) {
@@ -132,8 +152,10 @@ export function UserProvider({ children }) {
   /* =======================================================
      LOGOUT
      -------------------------------------------------------
-     Auth.js menangani persistence session.
-     UserContext menangani React state.
+     Auth.js menangani penghapusan session lokal dan
+     pemberitahuan logout ke backend.
+
+     UserContext menghapus state autentikasi.
   ======================================================= */
 
   async function logout() {
@@ -148,7 +170,11 @@ export function UserProvider({ children }) {
   /* =======================================================
      REFRESH
      -------------------------------------------------------
-     Mengambil credentials terbaru dari server.
+     Validasi ulang session secara manual.
+
+     Fungsi ini TIDAK dipanggil oleh perpindahan route.
+     Hanya dipanggil jika ada kebutuhan eksplisit untuk
+     mengambil credentials terbaru dari server.
   ======================================================= */
 
   async function refresh() {
@@ -179,11 +205,11 @@ export function UserProvider({ children }) {
   /* =======================================================
      ACCESS
      -------------------------------------------------------
-     Access berasal dari credentials server.
+     Access berasal dari credentials yang tersimpan
+     di React state.
 
-     Contoh:
-     credentials.access.dashboard
-     credentials.access.pengaturan
+     Selama UserProvider tidak remount, perpindahan route
+     tidak mengulang proses getCredentials.
   ======================================================= */
 
   const access =
