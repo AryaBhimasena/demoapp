@@ -617,6 +617,340 @@
 }
 
 /* =========================================================
+   ACCESS DENIED MODAL
+========================================================= */
+
+.access-denied-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(20, 28, 48, 0.42);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  animation: accessDeniedOverlayIn 180ms ease both;
+}
+
+.access-denied-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 410px);
+  padding: 34px 30px 28px;
+  border: 1px solid rgba(231, 234, 241, 0.95);
+  border-radius: 24px;
+  background: var(--navbar-background);
+  box-shadow:
+    0 24px 80px rgba(28, 39, 72, 0.18),
+    0 8px 24px rgba(28, 39, 72, 0.08);
+  text-align: center;
+  animation: accessDeniedModalIn 220ms ease both;
+}
+
+.access-denied-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 20px;
+  border: 1px solid #ffd9de;
+  border-radius: 18px;
+  background: var(--navbar-danger-soft);
+  color: var(--navbar-danger);
+}
+
+.access-denied-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.access-denied-eyebrow {
+  margin-bottom: 8px;
+  color: var(--navbar-danger);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.access-denied-modal h2 {
+  margin: 0;
+  color: var(--navbar-text);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.access-denied-modal p {
+  max-width: 320px;
+  margin: 13px 0 0;
+  color: var(--navbar-text-soft);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.access-denied-modal p strong {
+  color: var(--navbar-text);
+  font-weight: 750;
+}
+
+.access-denied-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #8b95a8;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.access-denied-close:hover {
+  background: #f3f5f9;
+  color: var(--navbar-text);
+}
+
+.access-denied-button {
+  width: 100%;
+  min-height: 43px;
+  margin-top: 25px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--navbar-primary);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.access-denied-button:hover {
+  background: var(--navbar-primary-dark);
+  box-shadow: 0 8px 18px rgba(49, 87, 213, 0.18);
+}
+
+.access-denied-button:active {
+  transform: scale(0.98);
+}
+
+@keyframes accessDeniedOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes accessDeniedModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   ACCESS DENIED MODAL
+========================================================= */
+
+.access-denied-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(20, 28, 48, 0.42);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  animation: accessDeniedOverlayIn 180ms ease both;
+}
+
+.access-denied-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 410px);
+  padding: 34px 30px 28px;
+  border: 1px solid rgba(231, 234, 241, 0.95);
+  border-radius: 24px;
+  background: var(--navbar-background);
+  box-shadow:
+    0 24px 80px rgba(28, 39, 72, 0.18),
+    0 8px 24px rgba(28, 39, 72, 0.08);
+  text-align: center;
+  animation: accessDeniedModalIn 220ms ease both;
+}
+
+.access-denied-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 20px;
+  border: 1px solid #ffd9de;
+  border-radius: 18px;
+  background: var(--navbar-danger-soft);
+  color: var(--navbar-danger);
+}
+
+.access-denied-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.access-denied-eyebrow {
+  margin-bottom: 8px;
+  color: var(--navbar-danger);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.access-denied-modal h2 {
+  margin: 0;
+  color: var(--navbar-text);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.access-denied-modal p {
+  max-width: 320px;
+  margin: 13px 0 0;
+  color: var(--navbar-text-soft);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.access-denied-modal p strong {
+  color: var(--navbar-text);
+  font-weight: 750;
+}
+
+.access-denied-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #8b95a8;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.access-denied-close:hover {
+  background: #f3f5f9;
+  color: var(--navbar-text);
+}
+
+.access-denied-button {
+  width: 100%;
+  min-height: 43px;
+  margin-top: 25px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--navbar-primary);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.access-denied-button:hover {
+  background: var(--navbar-primary-dark);
+  box-shadow: 0 8px 18px rgba(49, 87, 213, 0.18);
+}
+
+.access-denied-button:active {
+  transform: scale(0.98);
+}
+
+@keyframes accessDeniedOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes accessDeniedModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.navbar-settings-link.disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.navbar-settings-link.disabled:hover {
+  color: var(--navbar-text-soft);
+  background: transparent;
+}
+
+/* =========================================================
    ACCESSIBILITY
 ========================================================= */
 
@@ -750,6 +1084,31 @@
   .navbar-link,
   .navbar-settings-link {
     width: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .access-denied-overlay {
+    padding: 18px;
+  }
+
+  .access-denied-modal {
+    padding: 30px 22px 23px;
+    border-radius: 21px;
+  }
+
+  .access-denied-modal h2 {
+    font-size: 20px;
+  }
+
+  .access-denied-modal p {
+    font-size: 12px;
+  }
+
+  .access-denied-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
   }
 }
 
